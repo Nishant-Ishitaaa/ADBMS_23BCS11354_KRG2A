@@ -1,0 +1,36 @@
+CREATE TABLE Employee (
+    ID INT,
+    NAME VARCHAR(50),
+    SALARY INT,
+    DEPT_ID INT
+);
+
+INSERT INTO Employee VALUES
+(1, 'JOE', 70000, 1),
+(2, 'JIM', 90000, 1),
+(3, 'HENRY', 80000, 2),
+(4, 'SAM', 60000, 2),
+(5, 'MAX', 90000, 1);
+
+CREATE TABLE Department (
+    ID INT,
+    DEPT_NAME VARCHAR(50)
+);
+
+INSERT INTO Department VALUES
+(1, 'IT'),
+(2, 'SALES');
+
+SELECT 
+    D.DEPT_NAME,
+    E.NAME,
+    E.SALARY
+FROM Employee E
+JOIN Department D
+    ON E.DEPT_ID = D.ID
+WHERE E.SALARY = (
+    SELECT MAX(SALARY)
+    FROM Employee
+    WHERE DEPT_ID = E.DEPT_ID
+)
+ORDER BY D.DEPT_NAME;
